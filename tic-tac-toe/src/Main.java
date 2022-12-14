@@ -61,27 +61,45 @@ public class Main {
     public static CheckResult checkWins(String[][] grid) {
         //Check for columns
         for (int row = 0; row < 3; row++) {
-            if (grid[row][0].equals("O") && grid[row][1].equals("O") && grid[row][2].equals("O")) {
+            if (isPlayerWinningRow(grid, row, "O")) {
                 return PC_WIN;
-            } else if (grid[row][0].equals("X") && grid[row][1].equals("X") && grid[row][2].equals("X")) {
+            } else if (isPlayerWinningRow(grid, row, "X")) {
                 return PLAYER_WIN;
             }
         }
         //Check for rows
         for (int col = 0; col < 3; col++) {
-            if (grid[0][col].equals("O") && grid[1][col].equals("O") && grid[2][col].equals("O")) {
+            if (isPlayerWinningColumn(grid, col, "O")) {
                 return PC_WIN;
-            } else if (grid[0][col].equals("X") && grid[1][col].equals("X") && grid[2][col].equals("X")) {
+            } else if (isPlayerWinningColumn(grid, col, "X")) {
                 return PLAYER_WIN;
             }
         }
         // Check diagonals
-        if (grid[0][0].equals("O") && grid[1][1].equals("O") && grid[2][2].equals("O") || grid[2][0].equals("O") && grid[1][1].equals("O") && grid[0][2].equals("O")) {
+        if (isPlayerWinningDiagonals(grid, "O")) {
             return PC_WIN;
-        } else if (grid[0][0].equals("X") && grid[1][1].equals("X") && grid[2][2].equals("X") || grid[0][2].equals("X") && grid[1][1].equals("X") && grid[2][0].equals("X")) {
+        } else if (isPlayerWinningDiagonals(grid, "X")) {
             return PLAYER_WIN;
         }
         return NO_WIN;
+    }
+
+    static boolean isPlayerWinningRow(String [][] grid, int row, String playerType) {
+        return grid[row][0].equals(playerType) && grid[row][1].equals(playerType) && grid[row][2].equals(playerType);
+    }
+
+    static boolean isPlayerWinningColumn(String [][] grid, int col, String playerType) {
+        return grid[0][col].equals(playerType) && grid[1][col].equals(playerType) && grid[2][col].equals(playerType);
+    }
+
+    static boolean isPlayerWinningDiagonals(String [][] grid, String playerType) {
+        return (grid[0][0].equals(playerType)
+                && grid[1][1].equals(playerType)
+                && grid[2][2].equals(playerType))
+                ||
+                (grid[2][0].equals(playerType)
+                && grid[1][1].equals(playerType)
+                && grid[0][2].equals(playerType));
     }
 
     public static void main(String[] args) {
